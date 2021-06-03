@@ -1,2 +1,2 @@
 # SUT
-SUT is Simpletons Under Test
+"Simpletons Under Test"
