@@ -1,1 +1,2 @@
-# offline_python_libs
+# SUT
+SUT is Simpletons Under Test
