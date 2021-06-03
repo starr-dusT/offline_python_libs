@@ -1,0 +1,5 @@
+repo_location: /home/tstarr/devel/python/test
+output_directory: /home/tstarr/tester
+jobs:
+    lint: "pylint square.py"
+    overall_test: "pytest square_test.py --color=yes" 
