@@ -1,7 +1,6 @@
 import os
 import yaml
 import subprocess
-from subprocess_tee import run
 import time
 
 class Sut:
@@ -35,9 +34,9 @@ class Sut:
         for job in self.config["jobs"].keys():
             print(job + ":\n\n")
             command = self.config["jobs"][job] 
-            output = run(command)
-            with open(os.path.join(output_location, job + ".txt"), 'w') as f:
-                print(output, file=f)
+            subprocess.run(command.split(" "))
+            #with open(os.path.join(output_location, job + ".txt"), 'w') as f:
+            #    print(output, file=f)
         os.chdir(self.start_dir)
 
     def __clear_output(self):
