@@ -15,28 +15,14 @@ class Sut:
         os.chdir(self.start_dir)
         return current_hash
 
-    def __create_env(self, current_hash):
-        output_location = os.path.join(self.config["output_directory"], current_hash)
-        clone_location = os.path.join(output_location, ".tmp")
-        try:
-            os.makedirs(clone_location)
-        except:
-            print("WARNING: overwriting previous results")
-            os.rmdir(clone_location)
-            os.makedirs(clone_location)
-        subprocess.run(['git', 'clone', '--quiet',
-                        self.config["repo_location"], clone_location])
-        return output_location
-
-    def __run_commands(self, output_location):
+    def __run_commands(self):
         print("Running commands...")
-        os.chdir(os.path.join(output_location, ".tmp"))
+        os.chdir(self.config["repo_location"])
         for job in self.config["jobs"].keys():
             print(job + ":\n\n")
             command = self.config["jobs"][job] 
             subprocess.run(command.split(" "))
-            #with open(os.path.join(output_location, job + ".txt"), 'w') as f:
-            #    print(output, file=f)
+            print("\n\n")
         os.chdir(self.start_dir)
 
     def __clear_output(self):
@@ -56,8 +42,7 @@ class Sut:
             current_hash = self.__get_hash()
             if self.old_hash != current_hash:
                 print("Detected changes...")
-                output_location = self.__create_env(current_hash)
-                self.__run_commands(output_location)
+                self.__run_commands()
                 self.old_hash = current_hash
                 first_cycle = True
                 input("Done... Press enter to continue")
